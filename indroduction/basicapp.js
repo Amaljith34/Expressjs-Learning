@@ -8,17 +8,39 @@ app.get('/',(req,res)=>{
 
 
 //productpage
-app.get('/product',(req,res)=>{
+// app.get('/product',(req,res)=>{
+//     res.send('this is product page');
+// })
+
+// ///aboutpage
+// app.get('/about',(req,res)=>{
+//     res.send('this is about page');
+// })
+
+// // contact
+// app.get('/contact',(req,res)=>{
+//     res.send('this is contact page');
+// })
+
+
+// app.listen(PORT,()=>{
+//     console.log('running');
+// })
+
+
+////////methods
+
+app.post('/product',(req,res)=>{
     res.send('this is product page');
 })
 
 ///aboutpage
-app.get('/about',(req,res)=>{
+app.put('/about',(req,res)=>{
     res.send('this is about page');
 })
 
 // contact
-app.get('/contact',(req,res)=>{
+app.delete('/contact',(req,res)=>{
     res.send('this is contact page');
 })
 
