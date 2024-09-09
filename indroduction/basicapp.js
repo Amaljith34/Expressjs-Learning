@@ -81,19 +81,36 @@ const PORT=3000;
 
 
 
-//shortest way to handle the multiple routing
-app.get('/product/:category',(req,res)=>{
-    // res.send(req.params.category)
-    const {category}=req.params
-    if(category==='laptop'){
-        res.send('laptops page')
-    }
-    else if(category==='watches'){
-        res.send('watch pages')
-    }
-    else{
-        res.send('other products')
-    }
+////shortest way to handle the multiple routing
+// app.get('/product/:category',(req,res)=>{
+//     // res.send(req.params.category)
+//     const {category}=req.params
+//     if(category==='laptop'){
+//         res.send('laptops page')
+//     }
+//     else if(category==='watches'){
+//         res.send('watch pages')
+//     }
+//     else{
+//         res.send('other products')
+//     }
+// })
+
+
+
+// app.get('/product/:category/:brand',(req,res)=>{
+//     // res.send(req.params.category)
+//     const {category}=req.params
+//     const {brand}=req.params
+     
+//     res.send(`product :${category}, brand:${brand}`)
+// })
+
+
+app.get('/flight/:from-:to',(req,res)=>{
+    
+     
+    res.send(`flight from  :${req.params.from}, to :${req.params.to}`)
 })
 
 
