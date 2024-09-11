@@ -1,0 +1,74 @@
+
+test> show dbs
+admin   40.00 KiB
+config  60.00 KiB
+local   40.00 KiB
+test> use user
+switched to db user
+user>  use testDB
+switched to db testDB
+testDB> show dbs
+admin    40.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+testDB> use user
+switched to db user
+user> show dbs
+admin    40.00 KiB
+config  108.00 KiB
+local    40.00 KiB
+user> db
+user
+user> use admin
+switched to db admin
+admin> db
+admin
+admin> use user
+switched to db user
+user> db.dropDatabase()
+{ ok: 1, dropped: 'user' }
+user> use testDB
+switched to db testDB
+testDB> db
+testDB
+testDB> db.dropDatabase()
+{ ok: 1, dropped: 'testDB' }
+testDB> db.dropDatabase()
+{ ok: 1, dropped: 'testDB' }
+testDB> use store
+switched to db store
+store> db
+store
+store> db.createCollection("product")
+{ ok: 1 }
+store> showc collections
+Uncaught:
+SyntaxError: Missing semicolon. (1:5)
+
+> 1 | showc collections
+    |      ^
+  2 |
+
+store> show collections
+product
+store> use user
+switched to db user
+user> use store
+switched to db store
+store> db
+store
+store> db.createCollection("user")
+{ ok: 1 }
+store> show collections
+product
+user
+store> db.product.drop()
+true
+store> show collections
+user
+store> db.createCollection("product")
+{ ok: 1 }
+store> show collections
+product
+user
+store>
