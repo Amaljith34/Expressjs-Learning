@@ -1,7 +1,19 @@
 const express=require('express');
 const app=express();
 const path=require('path')
-const PORT=3000;
+const PORT=3001;
+
+
+
+///req.quary
+
+app.get('/',(req,res)=>{
+     res.send('helo')
+})
+app.get('/student',(req,res)=>{
+    res.send(req.query)
+})
+
 
 
 
@@ -51,6 +63,24 @@ const PORT=3000;
 // })
 
 
+// app.get('/',(req,res)=>{
+//     res.send('home page')
+// })
+
+// app.post('/product',(req,res)=>{
+//     res.send(' product post');
+// })
+
+// ///aboutpage
+// app.put('/product',(req,res)=>{
+//     res.send(' product updaate');
+// })
+
+// // contact
+// app.delete('/product',(req,res)=>{
+//     res.send(' product delete');
+// })
+
 
 
 
@@ -76,26 +106,28 @@ const PORT=3000;
 
 
 
+
+
 // //static file
 
-app.use(express.static('public'))
+// app.use(express.static('public'))
 
 
 
-//shortest way to handle the multiple routing
-app.get('/product/:category',(req,res)=>{
-    // res.send(req.params.category)
-    const {category}=req.params
-    if(category==='laptop'){
-        res.send('laptops page')
-    }
-    else if(category==='watches'){
-        res.send('watch pages')
-    }
-    else{
-        res.send('other products')
-    }
-})
+// //shortest way to handle the multiple routing
+// app.get('/product/:category',(req,res)=>{
+//     // res.send(req.params.category)
+//     const {category}=req.params
+//     if(category==='laptop'){
+//         res.send('laptops page')
+//     }
+//     else if(category==='watches'){
+//         res.send('watch pages')
+//     }
+//     else{
+//         res.send('other products')
+//     }
+// })
 
 
 
@@ -122,6 +154,19 @@ app.get('/product/:category',(req,res)=>{
 //     }
 //     else{
 //         res.send('other products')
+//     }
+// })
+// app.get('/product/:category',(req,res)=>{
+//     const {category}=req.params
+//     // res.send(req.params)
+//     if(category==='laptop'){
+//         res.send('laptop page')
+//     }
+//     else if(category==='mobile'){
+//         res.send('this is mobile page')
+//     }
+//     else{
+//         res.send('other items')
 //     }
 // })
 
