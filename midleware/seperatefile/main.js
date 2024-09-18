@@ -12,12 +12,11 @@ app.get('/profile',fn,fn1,(req,res)=>{
 })
 app.get('/',(req,res,next)=>{
     console.log('heloo');
-    res.send('koii')
+    res.send('home midleware')
     next()
 })
 app.use((req,res,next)=>{
     console.log(new Date());
-    
     next()
  })
  
