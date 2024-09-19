@@ -1,80 +1,86 @@
-const express = require('express');
+
+import express from 'express';
+import mongoose from 'mongoose';
+
 const app = express();
-const bodyParser = require('body-parser');
+app.use(express.json());
 
-// In-memory storage for users
-let users = [];
+const userSchema = new mongoose.Schema({
+    title: String,
+    color: String, 
+});
 
-// Middleware to parse JSON requests
-app.use(bodyParser.json());
 
-// POST '/users' - Create a user with name, email, and username
-app.post('/users', (req, res) => {
-    const { name, email, username } = req.body;
-    
-    if (!name || !email || !username) {
-        return res.status(400).json({ error: 'Name, email, and username are required.' });
+const MONGO_URI = 'mongodb+srv://amal:amaljith%402002@cluster0.inpmn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+
+
+mongoose.connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB connected"))
+.catch((err) => console.log("MongoDB connection error:", err));
+
+
+const User = mongoose.model('User', userSchema);
+
+
+app.get('/', (req, res) => {
+    res.send('Hello');
+});
+
+app.get('/about', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error " });
     }
-    
-    const newUser = {
-        id: users.length + 1, // Generate a new ID (in a real app, you should use a proper unique ID)
-        name,
-        email,
-        username
-    };
-    
-    users.push(newUser);
-    res.status(201).json(newUser);
 });
 
-// GET '/users' - Get all users
-app.get('/users', (req, res) => {
-    res.json(users);
-});
-
-// GET '/users/:id' - Get a specific user based on the id provided
-app.get('/users/:id', (req, res) => {
-    const userId = parseInt(req.params.id);
-    const user = users.find(u => u.id === userId);
-    
-    if (!user) {
-        return res.status(404).json({ error: 'User not found.' });
+app.post('/about', async (req, res) => {
+    try {
+        const { title, color } = req.body;
+        const newUser = new User({ title, color });
+        await newUser.save();
+        res.status(201).json(newUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error " });
     }
-    
-    res.json(user);
 });
 
-// PUT '/users/:id' - Update a specific user
-app.put('/users/:id', (req, res) => {
-    const userId = parseInt(req.params.id);
-    const { name, email, username } = req.body;
-    
-    const userIndex = users.findIndex(u => u.id === userId);
-    
-    if (userIndex === -1) {
-        return res.status(404).json({ error: 'User not found.' });
+app.delete('/about/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const deleted = await User.findByIdAndDelete(userId);
+        if (!deleted) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(deleted);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error " });
     }
-    
-    const updatedUser = { ...users[userIndex], name, email, username };
-    users[userIndex] = updatedUser;
-    
-    res.json(updatedUser);
 });
 
-// DELETE '/users/:id' - Delete a specific user
-app.delete('/users/:id', (req, res) => {
-    const userId = parseInt(req.params.id);
-    const userIndex = users.findIndex(u => u.id === userId);
-    
-    if (userIndex === -1) {
-        return res.status(404).json({ error: 'User not found.' });
+app.put('/notes/:id', async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const updatedUser = await User.findByIdAndUpdate(userId, req.body, { new: true });
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error " });
     }
-    
-    const deletedUser = users.splice(userIndex, 1);
-    res.json(deletedUser[0]);
 });
 
-// Start the server
-app.listen(3002, () => {
-    console.log('Server is running on port 3002');
+
+app.listen(3003, () => {
+    console.log(' running  ');
 });
+

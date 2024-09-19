@@ -7,12 +7,12 @@ const PORT=3001;
 
 ///req.quary
 
-app.get('/',(req,res)=>{
-     res.send('helo')
-})
-app.get('/student',(req,res)=>{
-    res.send(req.query)
-})
+// app.get('/',(req,res)=>{
+//      res.send('helo')
+// })
+// app.get('/student',(req,res)=>{
+//     res.send(req.query)
+// })
 
 
 
@@ -110,7 +110,7 @@ app.get('/student',(req,res)=>{
 
 // //static file
 
-// app.use(express.static('public'))
+app.use(express.static('public'))
 
 
 
