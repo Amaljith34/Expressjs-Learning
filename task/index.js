@@ -75,7 +75,7 @@ app.put('/notes/:id', async (req, res) => {
         res.json(updatedUser);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error " });
+        res.status(500).json({ message: "Error sorry " });
     }
 });
 
